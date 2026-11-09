@@ -1,0 +1,191 @@
+#include <iostream>
+#include <string>
+#include <windows.h>
+#include <conio.h>
+#include"../include/mainMenu.h"
+#include"../include/firstChapter.h"
+#include"../include/secondChapter.h"
+using namespace std;
+
+int stonesCollected = 0;
+
+void displayStoneProgress(int startY) {
+    stonesCollected++;
+
+    string progress = "[ Equation Stones Collected: " + to_string(stonesCollected) + " / 6 ]";
+    printCenteredAt(progress, startY, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+    // Visual representation
+    string stones = "[ ";
+    for (int i = 0; i < 6; i++) {
+        if (i < stonesCollected) {
+            stones += "1 ";
+        }
+        else {
+            stones += "0 ";
+        }
+    }
+    stones += "]";
+}
+
+void firstChapter(const string& playerName) {
+
+    WORD cyan = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+    WORD yellow = FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+    WORD green = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+    WORD purple = FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+	WORD blue = FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+	WORD red = FOREGROUND_RED | FOREGROUND_INTENSITY;
+
+    clearScreen();
+    int width, height;
+    getConsoleSize(width, height);
+    int startY = (height - 25) / 2;
+    if (startY < 0) startY = 0;
+
+    displayTitle(startY);
+    startY += 8;
+
+    // Chapter Introduction
+    printCenteredAt("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", startY++, cyan);
+    printCenteredAt("[ CHAPTER 1: The Village of Ones ]", startY++, blue);
+    printCenteredAt("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", startY++, cyan);
+    startY++;
+    printCenteredAt("You stand before the ruins of the Great Equation Stone.", startY++, green);
+    printCenteredAt("An ancient guardian appears, glowing with faint numbers.", startY++, green);
+    startY++;
+    printCenteredAt("'The Village of Ones holds the first fragment.'", startY++, red);
+    startY += 2;
+    printCenteredAt("Press any key to continue...", startY, purple);
+    _getch();
+
+    // Journey to Village
+    clearScreen();
+    startY = (height - 20) / 2;
+    if (startY < 0) startY = 0;
+
+    printCenteredAt("Traveling to the Village of Ones", startY, yellow);
+    startY += 3;
+
+    printCenteredAt("A quaint village appears through the mist.", startY++, green);
+    printCenteredAt("The ancient gate stands sealed before you.", startY++, green);
+    printCenteredAt("Glowing symbols pulse across its surface.", startY++, green);
+    startY += 2;
+    printCenteredAt("Press enter to approach the gate...", startY, purple);
+    _getch();
+
+    // The Gate Puzzle
+    clearScreen();
+    startY = (height - 22) / 2;
+    if (startY < 0) startY = 0;
+
+    printCenteredAt("+==========================================================+", startY++, cyan);
+    printCenteredAt("|                    THE SEALED GATE                       |", startY++, yellow);
+    printCenteredAt("+==========================================================+", startY++, cyan);
+    startY++;
+    printCenteredAt("The gate is locked. A magical sigil glows before you.", startY++, green);
+    startY += 2;
+
+    // Display the puzzle
+    printCenteredAt("+==========================================================+", startY++, cyan);
+    printCenteredAt("|                  RESTORE THE SIGIL                       |", startY++, yellow);
+    printCenteredAt("+==========================================================+", startY++, cyan);
+    startY++;
+    printCenteredAt("The equation glows before you:", startY++, green);
+    startY++;
+    printCenteredAt("7 + 9 - ___ = 12", startY++, blue);
+    startY++;
+    printCenteredAt("What number completes the sigil?", startY++, green);
+    startY += 2;
+
+    // Puzzle solving loop
+    int answer;
+    int attempts = 0;
+    bool solved = false;
+
+    while (!solved && attempts < 3) {
+        printCenteredAt("Enter your answer: ", startY, purple);
+        int inputX = (width + 19) / 2;
+        setCursorPosition(inputX, startY);
+
+        cin >> answer;
+        cin.ignore(); // Clear the newline
+
+        if (answer == 4) {
+            solved = true;
+            startY += 2;
+            printCenteredAt("*** CORRECT! ***", startY++, cyan);
+            startY++;
+            printCenteredAt("The sigil BLAZES with brilliant light!", startY++, green);
+            printCenteredAt("The gate creaks open...", startY++, yellow);
+            startY++;
+        }
+        else {
+            attempts++;
+            startY += 2;
+            if (attempts < 3) {
+                printCenteredAt("The sigil flickers... Try again.", startY++, green);
+                printCenteredAt("(Attempts remaining: " + to_string(3 - attempts) + ")", startY++, red);
+                startY++;
+            }
+            else {
+                printCenteredAt("The correct answer was 4.", startY++, green);
+                printCenteredAt("The gate opens reluctantly.", startY++, green);
+            }
+        }
+    }
+
+    startY += 2;
+    printCenteredAt("Press any key to enter the village...", startY, purple);
+    _getch();
+
+    // Inside the Village - Finding the Stone
+    clearScreen();
+    startY = (height - 20) / 2;
+    if (startY < 0) startY = 0;
+
+    printCenteredAt("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", startY++, cyan);
+    printCenteredAt("[ Inside the Village of Ones ]", startY++, yellow);
+    printCenteredAt("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", startY++, cyan);
+    startY++;
+
+    if (solved) {
+        printCenteredAt("The villagers emerge, amazed by your skill.", startY++, green);
+        startY++;
+        printCenteredAt("An elderly woman approaches with a glowing fragment.", startY++, green);
+        printCenteredAt("'The first stone. Five more await.'", startY++, yellow);
+    }
+    else {
+        printCenteredAt("The villagers watch with cautious eyes.", startY++, green);
+        startY++;
+        printCenteredAt("An elderly woman approaches with a glowing fragment.", startY++, green);
+        printCenteredAt("'The first stone. Practice harder for what's ahead.'", startY++, green);
+    }
+
+    startY += 2;
+    printCenteredAt("Press enter to claim the stone...", startY, purple);
+    _getch();
+
+    // Stone Collection
+    clearScreen();
+    startY = (height - 12) / 2;
+    if (startY < 0) startY = 0;
+
+    printCenteredAt("+==========================================================+", startY++, cyan);
+    printCenteredAt("|              *** EQUATION STONE OBTAINED ***             |", startY++, yellow);
+    printCenteredAt("+==========================================================+", startY++, cyan);
+    startY += 2;
+
+    printCenteredAt("[ THE FIRST STONE - Fragment of Addition ]", startY++, green);
+    startY += 2;
+
+    displayStoneProgress(startY);
+    startY += 3;
+
+    printCenteredAt("[ Chapter 1 Complete! ]", startY++, green);
+    startY += 2;
+    printCenteredAt("Press enter to continue your journey...", startY, purple);
+    _getch();
+
+    secondChapter(playerName);
+}
