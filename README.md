@@ -1,6 +1,6 @@
 <h1 align="center"> CodeCraft </h1>
 <div align="center">
-<img width="1024" height="1024" alt="logo" src="https://github.com/user-attachments/assets/cde9ff82-7d7a-46ea-a30f-740da8955092"/>
+<img width="300" height="300" alt="logo" src="https://github.com/user-attachments/assets/cde9ff82-7d7a-46ea-a30f-740da8955092"/>
 </div>
 <br>
 <!-- TABLE OF CONTENTS -->
